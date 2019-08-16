@@ -137,11 +137,15 @@ class Highlight extends AbstractSeries {
 
     const clickedOutsideDrag = this._clickedOutsideDrag(xLoc, yLoc);
     if ((drag && !dragArea) || !drag || clickedOutsideDrag) {
-      startArea(false, clickedOutsideDrag);
 
       if (onBrushStart) {
         onBrushStart(e);
       }
+
+      if(!e.bubbles) return;
+
+      startArea(false, clickedOutsideDrag);
+
       return;
     }
 
