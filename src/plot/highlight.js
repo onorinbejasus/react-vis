@@ -10,6 +10,10 @@ function getLocs(evt) {
 }
 
 class Highlight extends AbstractSeries {
+
+  xScale =  getAttributeScale(this.props, 'x');
+  yScale =  getAttributeScale(this.props, 'y');
+
   state = {
     dragging: false,
     brushArea: {top: 0, right: 0, bottom: 0, left: 0},
@@ -138,9 +142,7 @@ class Highlight extends AbstractSeries {
     const clickedOutsideDrag = this._clickedOutsideDrag(xLoc, yLoc);
     if ((drag && !dragArea) || !drag || clickedOutsideDrag) {
 
-      if (onBrushStart) {
-        onBrushStart(e);
-      }
+      if (onBrushStart) { onBrushStart(e); }
 
       if(!e.bubbles) return;
 
@@ -148,6 +150,7 @@ class Highlight extends AbstractSeries {
 
       return;
     }
+
 
     if (drag && dragArea) {
       startArea(true, clickedOutsideDrag);
@@ -225,20 +228,23 @@ class Highlight extends AbstractSeries {
       marginBottom,
       opacity
     } = this.props;
-    const {
-      brushArea: {left, right, top, bottom}
-    } = this.state;
+
+    const left = this.state.brushArea.left;
+    const right = this.state.brushArea.right;
+    const top = this.state.brushArea.top;
+    const bottom = this.state.brushArea.bottom;
 
     let leftPos = 0;
-    if (highlightX) {
-      const xScale = getAttributeScale(this.props, 'x');
-      leftPos = xScale(highlightX);
-    }
-
     let topPos = 0;
+
     if (highlightY) {
       const yScale = getAttributeScale(this.props, 'y');
-      topPos = yScale(highlightY);
+      topPos = yScale(new Date(highlightY));
+    }
+
+    if (highlightX) {
+      const xScale = getAttributeScale(this.props, 'x');
+      leftPos = xScale(new Date(highlightX));
     }
 
     const plotWidth = marginLeft + marginRight + innerWidth;
@@ -307,6 +313,7 @@ Highlight.propTypes = {
   highlightWidth: PropTypes.number,
   highlightX: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   highlightY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  area: PropTypes.object,
   onBrushStart: PropTypes.func,
   onDragStart: PropTypes.func,
   onBrush: PropTypes.func,
