@@ -163,9 +163,7 @@ class Highlight extends AbstractSeries {
   stopBrushing(e) {
     const {brushing, dragging, brushArea} = this.state;
     // Quickly short-circuit if the user isn't brushing in our component
-    if (!brushing && !dragging) {
-      return;
-    }
+    if (!brushing && !dragging) { return;}
     const {onBrushEnd, onDragEnd, drag} = this.props;
     const noHorizontal = Math.abs(brushArea.right - brushArea.left) < 5;
     const noVertical = Math.abs(brushArea.top - brushArea.bottom) < 5;
