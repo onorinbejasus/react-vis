@@ -37,7 +37,8 @@ function DiscreteColorLegendItem({
   orientation,
   onMouseEnter,
   onMouseLeave,
-  title
+  title,
+  strokeOpacity
 }) {
   let className = `rv-discrete-color-legend-item ${orientation}`;
   if (disabled) {
@@ -56,7 +57,8 @@ function DiscreteColorLegendItem({
           style={{
             ...(strokeWidth ? {strokeWidth} : {}),
             ...(strokeDasharrayStyle ? {strokeDasharray: strokeDasharrayStyle} : {}),
-            stroke: disabled ? null : color
+            stroke: disabled ? null : color,
+            strokeOpacity: (strokeOpacity ? strokeOpacity : 1.0)
           }}
 
         />
@@ -76,7 +78,8 @@ DiscreteColorLegendItem.propTypes = {
   orientation: PropTypes.oneOf(['vertical', 'horizontal']).isRequired,
   strokeDasharray: PropTypes.string,
   strokeWidth: PropTypes.number,
-  strokeStyle: PropTypes.oneOf(Object.keys(STROKE_STYLES))
+  strokeStyle: PropTypes.oneOf(Object.keys(STROKE_STYLES)),
+  strokeOpacity: PropTypes.number
 };
 DiscreteColorLegendItem.defaultProps = {
   disabled: false,

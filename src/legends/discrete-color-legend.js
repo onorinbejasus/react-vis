@@ -49,6 +49,7 @@ function DiscreteColorLegend({
           strokeDasharray={item.strokeDasharray}
           strokeStyle={item.strokeStyle}
           strokeWidth={item.strokeWidth}
+          strokeOpacity={item.strokeOpacity}
           disabled={Boolean(item.disabled)}
           orientation={orientation}
           key={i}
